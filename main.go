@@ -41,6 +41,7 @@ func main() {
 	// Запуск сервера
 	log.Println("Server running on http://localhost:8080")
 	log.Println("Server running on http://localhost:8080")
+	log.Println("Server running on http://localhost:8080")
 	router.Run(":8080")
 }
 
