@@ -57,7 +57,7 @@ func UpdateUser(c *gin.Context) {
 		return
 	}
 
-	query := `UPDATE "user" SET login = $1, password = $2 WHERE id = $3`
+	query := `UPDATE "userList" SET email = $1, password = $2 WHERE id = $3`
 	_, err := db.DB.Exec(query, creds.Login, creds.Password, id)
 	if err != nil {
 		c.JSON(http.StatusInternalServerError, gin.H{"error": "Database error"})
