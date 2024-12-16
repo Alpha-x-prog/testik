@@ -19,6 +19,10 @@ func main() {
 
 	router.POST("/register", handlers.RegisterUser)
 	router.POST("/login", handlers.LoginHandler)
+
+	router.POST("/rooms/addroom", handlers.AddRoom)
+	router.POST("/pets/add", handlers.AddPet)
+
 	router.GET("/users", middlewares.AuthMiddleware, handlers.GetUsers)
 	router.GET("/users/:id", middlewares.AuthMiddleware, handlers.GetUserByID)
 	router.PUT("/users/:id", middlewares.AuthMiddleware, handlers.UpdateUser)
