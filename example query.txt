@@ -1,0 +1,48 @@
+http://localhost:8080/rooms/addroom
+{
+  "number": 101,
+  "status_occupancy": false,
+  "status_cleaning": true,
+  "person": "John Doe",
+  "room_type": 1,
+  "price_per_day": 150,
+  "live_stream_url": "http://example.com/stream/101",
+  "available_from": "2024-12-20",
+  "available_to": "2024-12-30"
+}
+
+
+
+
+http://localhost:8080/register
+{
+    "email": "john.doe@example.com",
+    "password": "securepassword",
+    "name": "John",
+    "surname": "Doe",
+    "phone": 123456789
+}
+
+
+http://localhost:8080/login
+{
+    "email": "john2.doe@example.com",
+    "password": "securepassword"
+}
+
+
+http://localhost:8080/pets/add
+{
+  "owner_id": 1,
+  "name": "Max",
+  "age": 4,
+  "pet_info": "Active and playful Labrador",
+  "special_needs": "Needs hypoallergenic food",
+  "toy": 3,
+  "photos": 8,
+  "activity_id": 2,
+  "service_person": "Jane Smith",
+  "feed": 2,
+  "type": 1,
+  "room": 102
+}

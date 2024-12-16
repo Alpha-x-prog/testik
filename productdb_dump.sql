@@ -1,0 +1,780 @@
+--
+-- PostgreSQL database dump
+--
+
+-- Dumped from database version 17.2
+-- Dumped by pg_dump version 17.2
+
+SET statement_timeout = 0;
+SET lock_timeout = 0;
+SET idle_in_transaction_session_timeout = 0;
+SET transaction_timeout = 0;
+SET client_encoding = 'UTF8';
+SET standard_conforming_strings = on;
+SELECT pg_catalog.set_config('search_path', '', false);
+SET check_function_bodies = false;
+SET xmloption = content;
+SET client_min_messages = warning;
+SET row_security = off;
+
+SET default_tablespace = '';
+
+SET default_table_access_method = heap;
+
+--
+-- Name: activities; Type: TABLE; Schema: public; Owner: postgres
+--
+
+CREATE TABLE public.activities (
+    id integer NOT NULL,
+    activity character varying
+);
+
+
+ALTER TABLE public.activities OWNER TO postgres;
+
+--
+-- Name: activity_graph; Type: TABLE; Schema: public; Owner: postgres
+--
+
+CREATE TABLE public.activity_graph (
+    id integer NOT NULL,
+    mood character varying,
+    characteristic character varying,
+    time_activity time without time zone
+);
+
+
+ALTER TABLE public.activity_graph OWNER TO postgres;
+
+--
+-- Name: album; Type: TABLE; Schema: public; Owner: postgres
+--
+
+CREATE TABLE public.album (
+    id integer NOT NULL,
+    photo character varying
+);
+
+
+ALTER TABLE public.album OWNER TO postgres;
+
+--
+-- Name: animal_feed; Type: TABLE; Schema: public; Owner: postgres
+--
+
+CREATE TABLE public.animal_feed (
+    food_id integer NOT NULL,
+    mealtime character varying
+);
+
+
+ALTER TABLE public.animal_feed OWNER TO postgres;
+
+--
+-- Name: animals; Type: TABLE; Schema: public; Owner: postgres
+--
+
+CREATE TABLE public.animals (
+    id integer NOT NULL,
+    type character varying
+);
+
+
+ALTER TABLE public.animals OWNER TO postgres;
+
+--
+-- Name: collection_toys; Type: TABLE; Schema: public; Owner: postgres
+--
+
+CREATE TABLE public.collection_toys (
+    id integer NOT NULL,
+    toy integer
+);
+
+
+ALTER TABLE public.collection_toys OWNER TO postgres;
+
+--
+-- Name: dish; Type: TABLE; Schema: public; Owner: postgres
+--
+
+CREATE TABLE public.dish (
+    id integer NOT NULL,
+    name character varying,
+    ingredient integer,
+    dish character varying,
+    price integer
+);
+
+
+ALTER TABLE public.dish OWNER TO postgres;
+
+--
+-- Name: ingredients; Type: TABLE; Schema: public; Owner: postgres
+--
+
+CREATE TABLE public.ingredients (
+    id integer NOT NULL,
+    component character varying,
+    price integer
+);
+
+
+ALTER TABLE public.ingredients OWNER TO postgres;
+
+--
+-- Name: nanny_calls; Type: TABLE; Schema: public; Owner: postgres
+--
+
+CREATE TABLE public.nanny_calls (
+    id integer NOT NULL,
+    owner_id integer,
+    pet_id integer,
+    address character varying,
+    call_time time without time zone,
+    duration time without time zone,
+    status character varying
+);
+
+
+ALTER TABLE public.nanny_calls OWNER TO postgres;
+
+--
+-- Name: order_time_meal; Type: TABLE; Schema: public; Owner: postgres
+--
+
+CREATE TABLE public.order_time_meal (
+    id integer NOT NULL,
+    "time" time without time zone,
+    dish_number integer
+);
+
+
+ALTER TABLE public.order_time_meal OWNER TO postgres;
+
+--
+-- Name: petOwner; Type: TABLE; Schema: public; Owner: postgres
+--
+
+CREATE TABLE public."petOwner" (
+    id integer,
+    name character varying(255),
+    surname character varying(255),
+    phone integer,
+    email character varying(255),
+    created_at timestamp without time zone,
+    address character varying(255)
+);
+
+
+ALTER TABLE public."petOwner" OWNER TO postgres;
+
+--
+-- Name: pets; Type: TABLE; Schema: public; Owner: postgres
+--
+
+CREATE TABLE public.pets (
+    id integer NOT NULL,
+    owner_id integer,
+    name character varying(255) NOT NULL,
+    age integer,
+    pet_info character varying(500),
+    special_needs character varying(500),
+    toy integer,
+    photos integer,
+    activity_id integer,
+    service_person character varying(255),
+    feed integer,
+    type integer,
+    room integer
+);
+
+
+ALTER TABLE public.pets OWNER TO postgres;
+
+--
+-- Name: pets_id_seq; Type: SEQUENCE; Schema: public; Owner: postgres
+--
+
+CREATE SEQUENCE public.pets_id_seq
+    AS integer
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+ALTER SEQUENCE public.pets_id_seq OWNER TO postgres;
+
+--
+-- Name: pets_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: postgres
+--
+
+ALTER SEQUENCE public.pets_id_seq OWNED BY public.pets.id;
+
+
+--
+-- Name: photo_animals; Type: TABLE; Schema: public; Owner: postgres
+--
+
+CREATE TABLE public.photo_animals (
+    id integer NOT NULL,
+    url_photo character varying
+);
+
+
+ALTER TABLE public.photo_animals OWNER TO postgres;
+
+--
+-- Name: products; Type: TABLE; Schema: public; Owner: postgres
+--
+
+CREATE TABLE public.products (
+    id integer NOT NULL,
+    model character varying(30) NOT NULL,
+    company character varying(30) NOT NULL,
+    price integer NOT NULL
+);
+
+
+ALTER TABLE public.products OWNER TO postgres;
+
+--
+-- Name: products_id_seq; Type: SEQUENCE; Schema: public; Owner: postgres
+--
+
+ALTER TABLE public.products ALTER COLUMN id ADD GENERATED BY DEFAULT AS IDENTITY (
+    SEQUENCE NAME public.products_id_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1
+);
+
+
+--
+-- Name: recommendations_articles; Type: TABLE; Schema: public; Owner: postgres
+--
+
+CREATE TABLE public.recommendations_articles (
+    id integer NOT NULL,
+    title character varying,
+    content text,
+    author character varying,
+    url character varying
+);
+
+
+ALTER TABLE public.recommendations_articles OWNER TO postgres;
+
+--
+-- Name: role; Type: TABLE; Schema: public; Owner: postgres
+--
+
+CREATE TABLE public.role (
+    id integer NOT NULL,
+    working_specialisation character varying
+);
+
+
+ALTER TABLE public.role OWNER TO postgres;
+
+--
+-- Name: room; Type: TABLE; Schema: public; Owner: postgres
+--
+
+CREATE TABLE public.room (
+    number integer NOT NULL,
+    status_occupancy boolean NOT NULL,
+    status_cleaning boolean NOT NULL,
+    person character varying(255),
+    room_type integer NOT NULL,
+    price_per_day integer NOT NULL,
+    live_stream_url character varying(500),
+    available_from character varying(255),
+    available_to character varying(255)
+);
+
+
+ALTER TABLE public.room OWNER TO postgres;
+
+--
+-- Name: service_personal; Type: TABLE; Schema: public; Owner: postgres
+--
+
+CREATE TABLE public.service_personal (
+    person_id integer NOT NULL,
+    name character varying,
+    phone integer,
+    role integer
+);
+
+
+ALTER TABLE public.service_personal OWNER TO postgres;
+
+--
+-- Name: social_networks; Type: TABLE; Schema: public; Owner: postgres
+--
+
+CREATE TABLE public.social_networks (
+    id integer NOT NULL,
+    type character varying
+);
+
+
+ALTER TABLE public.social_networks OWNER TO postgres;
+
+--
+-- Name: toys; Type: TABLE; Schema: public; Owner: postgres
+--
+
+CREATE TABLE public.toys (
+    id integer NOT NULL,
+    toy character varying,
+    price integer
+);
+
+
+ALTER TABLE public.toys OWNER TO postgres;
+
+--
+-- Name: userlist; Type: TABLE; Schema: public; Owner: postgres
+--
+
+CREATE TABLE public.userlist (
+    id integer NOT NULL,
+    email character varying(255),
+    password character varying(255)
+);
+
+
+ALTER TABLE public.userlist OWNER TO postgres;
+
+--
+-- Name: userlist_id_seq; Type: SEQUENCE; Schema: public; Owner: postgres
+--
+
+CREATE SEQUENCE public.userlist_id_seq
+    AS integer
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+ALTER SEQUENCE public.userlist_id_seq OWNER TO postgres;
+
+--
+-- Name: userlist_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: postgres
+--
+
+ALTER SEQUENCE public.userlist_id_seq OWNED BY public.userlist.id;
+
+
+--
+-- Name: pets id; Type: DEFAULT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.pets ALTER COLUMN id SET DEFAULT nextval('public.pets_id_seq'::regclass);
+
+
+--
+-- Name: userlist id; Type: DEFAULT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.userlist ALTER COLUMN id SET DEFAULT nextval('public.userlist_id_seq'::regclass);
+
+
+--
+-- Data for Name: activities; Type: TABLE DATA; Schema: public; Owner: postgres
+--
+
+COPY public.activities (id, activity) FROM stdin;
+\.
+
+
+--
+-- Data for Name: activity_graph; Type: TABLE DATA; Schema: public; Owner: postgres
+--
+
+COPY public.activity_graph (id, mood, characteristic, time_activity) FROM stdin;
+\.
+
+
+--
+-- Data for Name: album; Type: TABLE DATA; Schema: public; Owner: postgres
+--
+
+COPY public.album (id, photo) FROM stdin;
+\.
+
+
+--
+-- Data for Name: animal_feed; Type: TABLE DATA; Schema: public; Owner: postgres
+--
+
+COPY public.animal_feed (food_id, mealtime) FROM stdin;
+\.
+
+
+--
+-- Data for Name: animals; Type: TABLE DATA; Schema: public; Owner: postgres
+--
+
+COPY public.animals (id, type) FROM stdin;
+\.
+
+
+--
+-- Data for Name: collection_toys; Type: TABLE DATA; Schema: public; Owner: postgres
+--
+
+COPY public.collection_toys (id, toy) FROM stdin;
+\.
+
+
+--
+-- Data for Name: dish; Type: TABLE DATA; Schema: public; Owner: postgres
+--
+
+COPY public.dish (id, name, ingredient, dish, price) FROM stdin;
+\.
+
+
+--
+-- Data for Name: ingredients; Type: TABLE DATA; Schema: public; Owner: postgres
+--
+
+COPY public.ingredients (id, component, price) FROM stdin;
+\.
+
+
+--
+-- Data for Name: nanny_calls; Type: TABLE DATA; Schema: public; Owner: postgres
+--
+
+COPY public.nanny_calls (id, owner_id, pet_id, address, call_time, duration, status) FROM stdin;
+\.
+
+
+--
+-- Data for Name: order_time_meal; Type: TABLE DATA; Schema: public; Owner: postgres
+--
+
+COPY public.order_time_meal (id, "time", dish_number) FROM stdin;
+\.
+
+
+--
+-- Data for Name: petOwner; Type: TABLE DATA; Schema: public; Owner: postgres
+--
+
+COPY public."petOwner" (id, name, surname, phone, email, created_at, address) FROM stdin;
+10	John	Doe	123456789	john.doe@example.com	2024-12-16 19:10:58.43068	\N
+11	John	Doe	123456789	john1.doe@example.com	2024-12-16 19:18:34.277184	\N
+12	John	Doe	123456789	john2.doe@example.com	2024-12-16 19:20:44.410103	\N
+\.
+
+
+--
+-- Data for Name: pets; Type: TABLE DATA; Schema: public; Owner: postgres
+--
+
+COPY public.pets (id, owner_id, name, age, pet_info, special_needs, toy, photos, activity_id, service_person, feed, type, room) FROM stdin;
+1	1	Max	4	Active and playful Labrador	Needs hypoallergenic food	3	8	2	Jane Smith	2	1	102
+\.
+
+
+--
+-- Data for Name: photo_animals; Type: TABLE DATA; Schema: public; Owner: postgres
+--
+
+COPY public.photo_animals (id, url_photo) FROM stdin;
+\.
+
+
+--
+-- Data for Name: products; Type: TABLE DATA; Schema: public; Owner: postgres
+--
+
+COPY public.products (id, model, company, price) FROM stdin;
+1	iPhone X	Apple	72000
+2	iPhone X	Apple	72000
+3	Mate 10 Pro	Huawei	35000
+\.
+
+
+--
+-- Data for Name: recommendations_articles; Type: TABLE DATA; Schema: public; Owner: postgres
+--
+
+COPY public.recommendations_articles (id, title, content, author, url) FROM stdin;
+\.
+
+
+--
+-- Data for Name: role; Type: TABLE DATA; Schema: public; Owner: postgres
+--
+
+COPY public.role (id, working_specialisation) FROM stdin;
+\.
+
+
+--
+-- Data for Name: room; Type: TABLE DATA; Schema: public; Owner: postgres
+--
+
+COPY public.room (number, status_occupancy, status_cleaning, person, room_type, price_per_day, live_stream_url, available_from, available_to) FROM stdin;
+101	f	t	John Doe	1	150	http://example.com/stream/101	2024-12-20	2024-12-30
+\.
+
+
+--
+-- Data for Name: service_personal; Type: TABLE DATA; Schema: public; Owner: postgres
+--
+
+COPY public.service_personal (person_id, name, phone, role) FROM stdin;
+\.
+
+
+--
+-- Data for Name: social_networks; Type: TABLE DATA; Schema: public; Owner: postgres
+--
+
+COPY public.social_networks (id, type) FROM stdin;
+\.
+
+
+--
+-- Data for Name: toys; Type: TABLE DATA; Schema: public; Owner: postgres
+--
+
+COPY public.toys (id, toy, price) FROM stdin;
+\.
+
+
+--
+-- Data for Name: userlist; Type: TABLE DATA; Schema: public; Owner: postgres
+--
+
+COPY public.userlist (id, email, password) FROM stdin;
+1	pochta@gmail.com	hesh
+2	john.doe@example.com	securepassword
+3	john.doe@example.com	securepassword
+4	john.doe@example.com	securepassword
+5	john.doe@example.com	securepassword
+6	john.doe@example.com	securepassword
+7	john.doe@example.com	securepassword
+8	john.doe@example.com	securepassword
+9	john.doe@example.com	securepassword
+10	john.doe@example.com	securepassword
+11	john1.doe@example.com	securepassword
+12	john2.doe@example.com	securepassword
+\.
+
+
+--
+-- Name: pets_id_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
+--
+
+SELECT pg_catalog.setval('public.pets_id_seq', 1, true);
+
+
+--
+-- Name: products_id_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
+--
+
+SELECT pg_catalog.setval('public.products_id_seq', 3, true);
+
+
+--
+-- Name: userlist_id_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
+--
+
+SELECT pg_catalog.setval('public.userlist_id_seq', 12, true);
+
+
+--
+-- Name: activities activities_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.activities
+    ADD CONSTRAINT activities_pkey PRIMARY KEY (id);
+
+
+--
+-- Name: activity_graph activity_graph_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.activity_graph
+    ADD CONSTRAINT activity_graph_pkey PRIMARY KEY (id);
+
+
+--
+-- Name: album album_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.album
+    ADD CONSTRAINT album_pkey PRIMARY KEY (id);
+
+
+--
+-- Name: animal_feed animal_feed_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.animal_feed
+    ADD CONSTRAINT animal_feed_pkey PRIMARY KEY (food_id);
+
+
+--
+-- Name: animals animals_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.animals
+    ADD CONSTRAINT animals_pkey PRIMARY KEY (id);
+
+
+--
+-- Name: collection_toys collection_toys_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.collection_toys
+    ADD CONSTRAINT collection_toys_pkey PRIMARY KEY (id);
+
+
+--
+-- Name: dish dish_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.dish
+    ADD CONSTRAINT dish_pkey PRIMARY KEY (id);
+
+
+--
+-- Name: ingredients ingredients_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.ingredients
+    ADD CONSTRAINT ingredients_pkey PRIMARY KEY (id);
+
+
+--
+-- Name: nanny_calls nanny_calls_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.nanny_calls
+    ADD CONSTRAINT nanny_calls_pkey PRIMARY KEY (id);
+
+
+--
+-- Name: order_time_meal order_time_meal_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.order_time_meal
+    ADD CONSTRAINT order_time_meal_pkey PRIMARY KEY (id);
+
+
+--
+-- Name: pets pets_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.pets
+    ADD CONSTRAINT pets_pkey PRIMARY KEY (id);
+
+
+--
+-- Name: photo_animals photo_animals_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.photo_animals
+    ADD CONSTRAINT photo_animals_pkey PRIMARY KEY (id);
+
+
+--
+-- Name: products products_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.products
+    ADD CONSTRAINT products_pkey PRIMARY KEY (id);
+
+
+--
+-- Name: recommendations_articles recommendations_articles_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.recommendations_articles
+    ADD CONSTRAINT recommendations_articles_pkey PRIMARY KEY (id);
+
+
+--
+-- Name: role role_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.role
+    ADD CONSTRAINT role_pkey PRIMARY KEY (id);
+
+
+--
+-- Name: room room_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.room
+    ADD CONSTRAINT room_pkey PRIMARY KEY (number);
+
+
+--
+-- Name: service_personal service_personal_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.service_personal
+    ADD CONSTRAINT service_personal_pkey PRIMARY KEY (person_id);
+
+
+--
+-- Name: social_networks social_networks_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.social_networks
+    ADD CONSTRAINT social_networks_pkey PRIMARY KEY (id);
+
+
+--
+-- Name: toys toys_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.toys
+    ADD CONSTRAINT toys_pkey PRIMARY KEY (id);
+
+
+--
+-- Name: userlist userlist_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.userlist
+    ADD CONSTRAINT userlist_pkey PRIMARY KEY (id);
+
+
+--
+-- Name: petOwner petowner_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public."petOwner"
+    ADD CONSTRAINT petowner_id_fkey FOREIGN KEY (id) REFERENCES public.userlist(id) ON DELETE CASCADE;
+
+
+--
+-- Name: pets pets_owner_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.pets
+    ADD CONSTRAINT pets_owner_id_fkey FOREIGN KEY (owner_id) REFERENCES public.userlist(id) ON DELETE CASCADE;
+
+
+--
+-- PostgreSQL database dump complete
+--
+
