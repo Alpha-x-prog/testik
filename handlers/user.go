@@ -2,7 +2,6 @@ package handlers
 
 import (
 	"net/http"
-	//	"strconv"
 
 	"awesomeProject/db"
 	"github.com/gin-gonic/gin"
