@@ -10,7 +10,7 @@ import (
 
 // GetUsers возвращает список всех пользователей
 func GetUsers(c *gin.Context) {
-	rows, err := db.DB.Query(`SELECT id, login FROM "user"`)
+	rows, err := db.DB.Query(`SELECT id, email FROM userList`)
 	if err != nil {
 		c.JSON(http.StatusInternalServerError, gin.H{"error": "Database error"})
 		return
@@ -33,9 +33,9 @@ func GetUserByID(c *gin.Context) {
 	id := c.Param("id")
 	var user struct {
 		ID    int    `json:"id"`
-		Login string `json:"login"`
+		Email string `json:"email"`
 	}
-	err := db.DB.QueryRow(`SELECT id, login FROM "user" WHERE id = $1`, id).Scan(&user.ID, &user.Login)
+	err := db.DB.QueryRow(`SELECT id, email FROM "userList" WHERE id = $1`, id).Scan(&user.ID, &user.Email)
 	if err != nil {
 		c.JSON(http.StatusNotFound, gin.H{"error": "User not found"})
 		return
